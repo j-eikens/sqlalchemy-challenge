@@ -88,26 +88,60 @@ def tobs():
 
     return jsonify(temp_list)
 
-# @app.route("/api/v1.0/<start>")
-# def start(start):
-#     session = Session(engine)
+##is the format for this correct?
+@app.route("/api/v1.0/<start>")
+def start(start):
+    session = Session(engine)
 
-#     query = session.query(Measurement.station, Measurement.date,\
-#                                 func.max(Measurement.tobs),\
-#                                 func.min(Measurement.tobs),\
-#                                 func.avg(Measurement.tobs)).\
-#                                 where(Measurement.date >= start).all()
+    query = session.query(Measurement.station, Measurement.date,\
+                                func.max(Measurement.tobs),\
+                                func.min(Measurement.tobs),\
+                                func.avg(Measurement.tobs)).\
+                                where(Measurement.date >= start).all()
 
-#     session.close()
+    session.close()
 
-#     temp_list = []
+    max_temp_list = []
+    min_temp_list = []
+    avg_temp_list = []
 
-#     for i in query:
-#         temp = i[1] 
-#         temp_list.append(temp)
-    
+    for i in query:
+        max_temp = i[2] 
+        min_temp = i[3]
+        avg_temp = i[4]
 
-#     return jsonify(temp_list)
+        max_temp_list.append(max_temp)
+        min_temp_list.append(min_temp)
+        avg_temp_list.append(avg_temp)
+
+    return jsonify(max_temp_list, min_temp_list, avg_temp_list)
+
+@app.route("/api/v1.0/<start>/<end>")
+def start_end(start, end):
+    session = Session(engine)
+
+    query = session.query(Measurement.station, Measurement.date,\
+                                func.max(Measurement.tobs),\
+                                func.min(Measurement.tobs),\
+                                func.avg(Measurement.tobs)).\
+                                where(Measurement.date >= start).where(Measurement.date <= end).all()
+
+    session.close()
+
+    max_temp_list = []
+    min_temp_list = []
+    avg_temp_list = []
+
+    for i in query:
+        max_temp = i[2] 
+        min_temp = i[3]
+        avg_temp = i[4]
+
+        max_temp_list.append(max_temp)
+        min_temp_list.append(min_temp)
+        avg_temp_list.append(avg_temp)
+
+    return jsonify(max_temp_list, min_temp_list, avg_temp_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
