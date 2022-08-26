@@ -3,7 +3,7 @@ Repository for homework 10
 
 ---
 
-## Files for Submission
+## Submission Files
 
 1. climate.ipynb
 2. app.py
