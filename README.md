@@ -1,6 +1,8 @@
 # sqlalchemy-challenge
 Repository for homework 10
 
+---
+
 ## Files for Submission
 -climate.ipynb
 -app.py
